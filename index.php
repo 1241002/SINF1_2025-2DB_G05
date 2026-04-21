@@ -1,8 +1,14 @@
-<?php 
-// 1. Incluir a ligação à base de dados
-require_once 'db.php'; 
+<?php
+session_start();
+require_once 'db.php';
 
-// 2. Ir buscar os eventos à base de dados
+// 1. Proteção: Se não houver sessão, vai para o login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// 2. Dados: Ir buscar os eventos
 $stmt = $pdo->query("SELECT * FROM Event");
 $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -16,18 +22,28 @@ $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body class="bg-light">
 
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Programa da Queima das Fitas</h1>
+<nav class="navbar navbar-dark bg-primary mb-4">
+    <div class="container">
+        <span class="navbar-brand">Queima das Fitas 2026</span>
+        <div class="d-flex text-white align-items-center">
+            <span class="me-3">Olá, <strong><?php echo $_SESSION['user_name']; ?></strong></span>
+            <a href="logout.php" class="btn btn-outline-light btn-sm">Sair</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="text-center mb-4">Programa de Eventos</h1>
     
     <div class="row">
         <?php foreach($eventos as $evento): ?>
             <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm h-100">
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $evento['name']; ?></h5>
-                        <p class="card-text text-muted"><?php echo $evento['type']; ?></p>
-                        <p class="card-text"><?php echo $evento['location']; ?></p>
-                        <small class="text-primary"><?php echo $evento['date_time']; ?></small>
+                        <h5 class="card-title"><?php echo htmlspecialchars($evento['name']); ?></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($evento['type']); ?></h6>
+                        <p class="card-text"><?php echo htmlspecialchars($evento['location']); ?></p>
+                        <p class="card-text"><small class="text-primary"><?php echo $evento['date_time']; ?></small></p>
                     </div>
                 </div>
             </div>

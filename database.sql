@@ -109,7 +109,7 @@ INSERT INTO Role (id, name) VALUES (1, 'Admin'), (2, 'Student');
 INSERT INTO User (role_id, name, email, password_hash) VALUES
 (1, 'Administrador Principal', 'admin@queima.pt', 'hash_falsa_123'),
 (2, 'João Silva', 'joao.silva@estudante.pt', 'hash_falsa_456'),
-(3, 'Maria Santos', 'maria.santos@estudante.pt', 'hash_falsa_789');
+(2, 'Maria Santos', 'maria.santos@estudante.pt', 'hash_falsa_789');
 
 INSERT INTO Faculty (id, name, acronym, description, colour) VALUES
 (1, 'Faculdade de Engenharia', 'FEUP', 'A maior faculdade do Porto.', 'Tijolo'),
