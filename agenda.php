@@ -52,7 +52,7 @@ $meus_eventos = $stmt_agenda->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <span class="navbar-brand">🔥 Queima das Fitas 2026</span>
         <div class="d-flex text-white align-items-center">
-            <span class="me-3">Olá, <strong><?php echo htmlspecialchars($user_name); ?></strong></span>
+            <span class="me-3">Olá, <a href="profile.php" class="text-white text-decoration-underline fw-bold"><?php echo htmlspecialchars($user_name); ?></a></span>
             
             <a href="index.php" class="btn btn-outline-light btn-sm me-2">📋 Programa</a>
             <a href="tents.php" class="btn btn-outline-light btn-sm me-2">⛺ Barracas</a>
