@@ -27,10 +27,9 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Programa Oficial</h2>
         
-        <!-- FORMULÁRIO DE ORDENAÇÃO COM JAVASCRIPT -->
+        <!-- REQUISITO: ORDENAÇÃO COM JAVASCRIPT -->
         <form method="GET" class="d-flex align-items-center">
             <label class="me-2 fw-bold text-secondary text-nowrap">Ordenar por:</label>
-            <!-- O atributo 'onchange' é o JavaScript a submeter a página sozinho! -->
             <select name="sort" class="form-select form-select-sm w-auto border-primary" onchange="this.form.submit()">
                 <option value="data" <?php if($ordenacao == 'data') echo 'selected'; ?>>📅 Data (Mais Próximos)</option>
                 <option value="popularidade" <?php if($ordenacao == 'popularidade') echo 'selected'; ?>>🔥 Popularidade (+ Votados)</option>
@@ -45,7 +44,7 @@
                 <div class="card shadow-sm h-100 border-0">
                     <div class="card-body bg-white">
                         
-                        <!-- LÓGICA DO ALERTA DE 48 HORAS -->
+                        <!-- REQUISITO: LÓGICA DO ALERTA DE 48 HORAS -->
                         <?php 
                             $event_time = strtotime($evento['date_time']);
                             $agora = time();
@@ -55,7 +54,6 @@
                         <h5 class="card-title text-primary fw-bold">
                             <?php echo htmlspecialchars($evento['name']); ?>
                             
-                            <!-- O CRACHÁ VERMELHO APARECE AQUI! -->
                             <?php if($diferenca_horas > 0 && $diferenca_horas <= 48): ?>
                                 <span class="badge bg-danger ms-2 align-middle text-uppercase" style="font-size: 0.7rem;">
                                     ⏳ Menos de 48h!
@@ -66,8 +64,15 @@
                         <h6 class="card-subtitle mb-3 text-muted"><?php echo date('d/m/Y - H:i', strtotime($evento['date_time'])); ?></h6>
                         
                         <p class="card-text mb-1"><strong>📍 Local:</strong> <?php echo htmlspecialchars($evento['location']); ?></p>
+                        
+                        <!-- REQUISITO: INTERATIVIDADE (LINK PARA DETALHES) -->
                         <?php if($evento['tent_name']): ?>
-                            <p class="card-text mb-1"><strong>🎪 Barraca:</strong> <?php echo htmlspecialchars($evento['tent_name']); ?></p>
+                            <p class="card-text mb-1">
+                                <strong>🎪 Barraca:</strong> 
+                                <a href="details.php?type=tent&id=<?php echo $evento['tent_id']; ?>" class="text-decoration-none fw-bold text-success">
+                                    <?php echo htmlspecialchars($evento['tent_name']); ?>
+                                </a>
+                            </p>
                         <?php endif; ?>
                         
                         <div class="mt-3 p-2 bg-light rounded text-center">
