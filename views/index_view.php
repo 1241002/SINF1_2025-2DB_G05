@@ -24,7 +24,20 @@
 </nav>
 
 <div class="container">
-    <h2 class="mb-4">Programa Oficial</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Programa Oficial</h2>
+        
+        <!-- FORMULÁRIO DE ORDENAÇÃO COM JAVASCRIPT -->
+        <form method="GET" class="d-flex align-items-center">
+            <label class="me-2 fw-bold text-secondary text-nowrap">Ordenar por:</label>
+            <!-- O atributo 'onchange' é o JavaScript a submeter a página sozinho! -->
+            <select name="sort" class="form-select form-select-sm w-auto border-primary" onchange="this.form.submit()">
+                <option value="data" <?php if($ordenacao == 'data') echo 'selected'; ?>>📅 Data (Mais Próximos)</option>
+                <option value="popularidade" <?php if($ordenacao == 'popularidade') echo 'selected'; ?>>🔥 Popularidade (+ Votados)</option>
+                <option value="rating" <?php if($ordenacao == 'rating') echo 'selected'; ?>>⭐ Melhor Classificação</option>
+            </select>
+        </form>
+    </div>
     
     <div class="row">
         <?php foreach($eventos as $evento): ?>

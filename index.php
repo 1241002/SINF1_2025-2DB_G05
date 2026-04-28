@@ -30,7 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rate_event'])) {
 }
 
 // 4. IR BUSCAR DADOS
-$eventos = getEventsWithRatings($pdo);
+// Vê que ordenação o utilizador escolheu (se não houver nenhuma, usa 'data' por defeito)
+$ordenacao = isset($_GET['sort']) ? $_GET['sort'] : 'data';
+
+// Vai buscar os eventos ao Model JÁ ORDENADOS!
+$eventos = getEventsWithRatings($pdo, $ordenacao);
 $minha_agenda = getUserAgendaIds($pdo, $user_id);
 $meus_ratings = getUserRatings($pdo, $user_id);
 

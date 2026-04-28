@@ -35,20 +35,29 @@ function rateEvent($pdo, $user_id, $evento_id, $nota) {
 // ==========================================
 // OBTER DADOS PARA A VIEW
 // ==========================================
-function getEventsWithRatings($pdo) {
-    $stmt = $pdo->query("
-        SELECT 
-            Event.*, 
-            Tent.name AS tent_name,
-            COALESCE(AVG(Rating.value), 0) AS media_rating,
-            COUNT(Rating.id) AS total_votos
-        FROM Event 
-        LEFT JOIN Tent ON Event.tent_id = Tent.id 
-        LEFT JOIN Rating ON Event.id = Rating.event_id
-        GROUP BY Event.id
-        ORDER BY Event.date_time ASC
-    ");
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+function getEventsWithRatings($pdo, $ordenacao = 'data') {
+    // Ordenação padrão: Data mais próxima
+    $orderBy = "Event.date_time ASC"; 
+
+    // Se o utilizador quiser por Rating (do maior para o menor)
+    if ($ordenacao == 'rating') {
+        $orderBy = "media_rating DESC, Event.date_time ASC";
+    } 
+    // Se quiser por Popularidade (os que têm mais votos)
+    elseif ($ordenacao == 'popularidade') {
+        $orderBy = "total_votos DESC, Event.date_time ASC";
+    }
+
+    $sql = "SELECT Event.*, Tent.name AS tent_name, 
+                   COALESCE(AVG(Rating.value), 0) AS media_rating,
+                   COUNT(Rating.id) AS total_votos
+            FROM Event
+            LEFT JOIN Tent ON Event.tent_id = Tent.id
+            LEFT JOIN Rating ON Event.id = Rating.event_id
+            GROUP BY Event.id
+            ORDER BY $orderBy";
+            
+    return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function getUserAgendaIds($pdo, $user_id) {
