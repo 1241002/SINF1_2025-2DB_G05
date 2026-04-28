@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;600&display=swap');
+
+:root {
+    --neon-green: #29ff00;
+    --neon-blue: #0099ff;
+    --neon-red: #ff3100;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+}
+
+body {
+    background: radial-gradient(circle at top right, #111, #000);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+h1, h2, .navbar-brand { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+
+/* Navbar com efeito Blur */
+.navbar {
+    backdrop-filter: blur(15px);
+    background: rgba(0,0,0,0.8) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s;
+}
+
+/* Card de Evento "Glow" */
+.event-card {
+    background: var(--glass-bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(5px);
+}
+
+.event-card:hover {
+    transform: scale(1.03);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 30px rgba(41, 255, 0, 0.2);
+}
+
+/* Imagem do Evento */
+.event-img-container {
+    height: 200px;
+    overflow: hidden;
+    border-radius: 15px 15px 0 0;
+    position: relative;
+}
+
+.event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.event-card:hover .event-img { transform: scale(1.1); }
+
+/* Badge de 48h com pulsação */
+.badge-48h {
+    background: var(--neon-red);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 49, 0, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 49, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 49, 0, 0); }
+}
+
+/* Botões Modernos */
+.btn-primary { 
+    background: var(--neon-blue); 
+    border: none; 
+    border-radius: 10px; 
+    font-weight: bold; 
+}
+
+/* Estilos extra para formulários no style.css */
+.form-control {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--neon-blue) !important;
+    box-shadow: 0 0 10px rgba(0, 153, 255, 0.3) !important;
+}
+
+.login-container {
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+    min-height: 100vh;
+}
+.btn-primary:hover { background: #007acc; box-shadow: 0 0 15px var(--neon-blue); }
