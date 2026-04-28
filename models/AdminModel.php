@@ -26,9 +26,24 @@ function deleteEvent($pdo, $id) {
     return $stmt->execute([$id]);
 }
 
-function addEvent($pdo, $tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo) {
+function addEvent($pdo, $tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo, $artistas_selecionados = []) {
+    // 1. Cria o evento normalmente
     $stmt = $pdo->prepare("INSERT INTO Event (tent_id, name, description, date_time, location, type) VALUES (?, ?, ?, ?, ?, ?)");
-    return $stmt->execute([$tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo]);
+    $sucesso = $stmt->execute([$tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo]);
+
+    // 2. Se o evento foi criado com sucesso E o admin escolheu artistas...
+    if ($sucesso && !empty($artistas_selecionados)) {
+        $event_id = $pdo->lastInsertId(); // Vai buscar o ID do evento que acabou de ser criado
+        
+        $stmt_artist = $pdo->prepare("INSERT INTO Event_Artist (event_id, artist_id) VALUES (?, ?)");
+        
+        // Insere cada artista selecionado na nossa nova tabela "ponte"
+        foreach ($artistas_selecionados as $artist_id) {
+            $stmt_artist->execute([$event_id, $artist_id]);
+        }
+    }
+    
+    return $sucesso;
 }
 
 // === BARRACAS & FACULDADES ===

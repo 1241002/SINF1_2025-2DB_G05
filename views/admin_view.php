@@ -50,6 +50,20 @@
                 <div class="col-md-8">
                     <div class="card shadow-sm">
                         <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0 text-secondary">Lista de Artistas</h5>
+                                
+                                <!-- FORMULÁRIO DE IMPORTAÇÃO E BOTÃO DE EXPORTAÇÃO AQUI -->
+                                <div class="d-flex gap-2">
+                                    <form method="POST" enctype="multipart/form-data" class="d-flex align-items-center mb-0">
+                                        <input type="hidden" name="import_artists" value="1">
+                                        <input type="file" name="csv_file" class="form-control form-control-sm me-2" accept=".csv" required style="max-width: 200px;">
+                                        <button type="submit" class="btn btn-info btn-sm text-white text-nowrap">⬆️ Importar CSV</button>
+                                    </form>
+                                    <a href="admin.php?export_artists=1" class="btn btn-success btn-sm d-flex align-items-center text-nowrap">⬇️ Exportar CSV</a>
+                                </div>
+                                
+                            </div>
                             <table class="table table-hover table-sm">
                                 <thead><tr><th>Nome</th><th>Género</th><th>País</th><th>Ações</th></tr></thead>
                                 <tbody>
@@ -96,6 +110,21 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                                
+                                <div class="mb-2 border p-2 rounded bg-light">
+                                    <label class="form-label" style="font-size: 0.8rem; font-weight: bold;">Associar Artistas (Apenas Concertos)</label>
+                                    <div style="max-height: 100px; overflow-y: auto;">
+                                        <?php foreach($artistas as $art): ?>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="artistas[]" value="<?php echo $art['id']; ?>" id="art_<?php echo $art['id']; ?>">
+                                                <label class="form-check-label" style="font-size: 0.85rem;" for="art_<?php echo $art['id']; ?>">
+                                                    <?php echo htmlspecialchars($art['name']); ?>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+
                                 <div class="mb-3"><textarea name="descricao" class="form-control form-control-sm" rows="2" placeholder="Descrição (Opcional)"></textarea></div>
                                 <button type="submit" class="btn btn-success btn-sm w-100">Guardar Evento</button>
                             </form>

@@ -31,7 +31,25 @@
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100 border-0">
                     <div class="card-body bg-white">
-                        <h5 class="card-title text-primary fw-bold"><?php echo htmlspecialchars($evento['name']); ?></h5>
+                        
+                        <!-- LÓGICA DO ALERTA DE 48 HORAS -->
+                        <?php 
+                            $event_time = strtotime($evento['date_time']);
+                            $agora = time();
+                            $diferenca_horas = ($event_time - $agora) / 3600; 
+                        ?>
+
+                        <h5 class="card-title text-primary fw-bold">
+                            <?php echo htmlspecialchars($evento['name']); ?>
+                            
+                            <!-- O CRACHÁ VERMELHO APARECE AQUI! -->
+                            <?php if($diferenca_horas > 0 && $diferenca_horas <= 48): ?>
+                                <span class="badge bg-danger ms-2 align-middle text-uppercase" style="font-size: 0.7rem;">
+                                    ⏳ Menos de 48h!
+                                </span>
+                            <?php endif; ?>
+                        </h5>
+
                         <h6 class="card-subtitle mb-3 text-muted"><?php echo date('d/m/Y - H:i', strtotime($evento['date_time'])); ?></h6>
                         
                         <p class="card-text mb-1"><strong>📍 Local:</strong> <?php echo htmlspecialchars($evento['location']); ?></p>
