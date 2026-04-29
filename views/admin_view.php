@@ -128,26 +128,6 @@
                                         <td><?php echo htmlspecialchars($art['country']); ?></td>
                                         <td class="text-end"><button type="button" class="btn btn-outline-light btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editArt<?php echo $art['id']; ?>">Editar</button><a href="details.php?type=artist&id=<?php echo $art['id']; ?>" class="btn btn-outline-light btn-sm me-1" target="_blank">Ver</a><a href="admin.php?delete_artist=<?php echo $art['id']; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Deseja apagar este artista?');">Apagar</a></td>
                                     </tr>
-                                    <!-- Modal Editar Artista -->
-                                    <div class="modal fade" id="editArt<?php echo $art['id']; ?>" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content bg-dark border-secondary">
-                                                <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Artista</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-                                                <div class="modal-body">
-                                                    <form method="POST" enctype="multipart/form-data">
-                                                        <input type="hidden" name="edit_artist" value="1">
-                                                        <input type="hidden" name="artist_id" value="<?php echo $art['id']; ?>">
-                                                        <div class="mb-3"><label class="form-label small text-muted">Nome</label><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($art['name']); ?>" required></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Género Musical</label><input type="text" name="genero" class="form-control" value="<?php echo htmlspecialchars($art['musical_genre']); ?>" required></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">País</label><input type="text" name="pais" class="form-control" value="<?php echo htmlspecialchars($art['country']); ?>" required></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Imagem</label><input type="file" name="imagem_artista" class="form-control" accept="image/*"><small class="text-muted d-block mt-1">Deixe em branco para manter a imagem atual</small></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Biografia Curta</label><textarea name="biografia" class="form-control" rows="3" required><?php echo htmlspecialchars($art['short_biography']); ?></textarea></div>
-                                                        <button type="submit" class="btn btn-primary w-100 fw-bold">GUARDAR ALTERAÇÕES</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -221,56 +201,6 @@
                                         <td><span class="badge bg-dark border border-secondary"><?php echo htmlspecialchars($evento['type']); ?></span></td>
                                         <td class="text-end"><button type="button" class="btn btn-outline-light btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editEvt<?php echo $evento['id']; ?>">Editar</button><a href="details.php?type=event&id=<?php echo $evento['id']; ?>" class="btn btn-outline-light btn-sm me-1" target="_blank">Ver</a><a href="admin.php?delete_event=<?php echo $evento['id']; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Eliminar este evento?');">Apagar</a></td>
                                     </tr>
-                                    <!-- Modal Editar Evento -->
-                                    <div class="modal fade" id="editEvt<?php echo $evento['id']; ?>" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content bg-dark border-secondary">
-                                                <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Evento</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-                                                <div class="modal-body">
-                                                    <form method="POST" enctype="multipart/form-data">
-                                                        <input type="hidden" name="edit_event" value="1">
-                                                        <input type="hidden" name="event_id" value="<?php echo $evento['id']; ?>">
-                                                        <div class="mb-3"><label class="form-label small text-muted">Nome do Evento</label><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($evento['name']); ?>" required></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Tipo de Evento</label>
-                                                            <select name="tipo" class="form-select bg-dark text-white border-secondary" required>
-                                                                <option value="">Tipo de Evento...</option>
-                                                                <option value="Academic ceremony" <?php echo $evento['type'] === 'Academic ceremony' ? 'selected' : ''; ?>>Cerimónia Académica</option>
-                                                                <option value="Concert" <?php echo $evento['type'] === 'Concert' ? 'selected' : ''; ?>>Concerto</option>
-                                                                <option value="Cultural activity" <?php echo $evento['type'] === 'Cultural activity' ? 'selected' : ''; ?>>Atividade Cultural</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Data/Hora</label><input type="datetime-local" name="data_hora" class="form-control" value="<?php echo date('Y-m-d\TH:i', strtotime($evento['date_time'])); ?>" required></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Recinto/Local</label><input type="text" name="localizacao" class="form-control" value="<?php echo htmlspecialchars($evento['location']); ?>" required></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Descrição</label><textarea name="descricao" class="form-control" rows="2"><?php echo htmlspecialchars($evento['description'] ?? ''); ?></textarea></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Imagem</label><input type="file" name="imagem_evento" class="form-control" accept="image/*"><small class="text-muted d-block mt-1">Deixe em branco para manter a imagem atual</small></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Associar à Barraca</label>
-                                                            <select name="tent_id" class="form-select bg-dark text-white border-secondary">
-                                                                <option value="">Nenhuma barraca</option>
-                                                                <?php foreach($tendas as $tenda): ?>
-                                                                    <option value="<?php echo $tenda['id']; ?>" <?php echo $evento['tent_id'] == $tenda['id'] ? 'selected' : ''; ?>><?php echo htmlspecialchars($tenda['name']); ?></option>
-                                                                <?php endforeach; ?>
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">ARTISTAS (para Concertos)</label>
-                                                            <div class="bg-dark p-2 rounded border border-secondary" style="max-height:120px;overflow-y:auto;">
-                                                                <?php 
-                                                                $artistas_evento = getEventArtists($pdo, $evento['id']);
-                                                                $ids_artistas_evento = array_column($artistas_evento, 'id');
-                                                                foreach($artistas as $art): 
-                                                                ?>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" name="artistas[]" value="<?php echo $art['id']; ?>" id="art_evt_<?php echo $evento['id']; ?>_<?php echo $art['id']; ?>" <?php echo in_array($art['id'], $ids_artistas_evento) ? 'checked' : ''; ?>>
-                                                                        <label class="form-check-label small text-white" for="art_evt_<?php echo $evento['id']; ?>_<?php echo $art['id']; ?>"><?php echo htmlspecialchars($art['name']); ?></label>
-                                                                    </div>
-                                                                <?php endforeach; ?>
-                                                            </div>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-primary w-100 fw-bold" style="background: var(--neon-green); color: black; border: none;">GUARDAR ALTERAÇÕES</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -324,36 +254,6 @@
                                         <td class="small"><?php echo date('H:i', strtotime($tenda['opening_hours'])) . ' - ' . date('H:i', strtotime($tenda['closing_hours'])); ?></td>
                                         <td class="text-end"><button type="button" class="btn btn-outline-light btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editTent<?php echo $tenda['id']; ?>">Editar</button><a href="details.php?type=tent&id=<?php echo $tenda['id']; ?>" class="btn btn-outline-light btn-sm me-1" target="_blank">Ver</a><a href="admin.php?delete_tent=<?php echo $tenda['id']; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Remover esta barraca?');">Apagar</a></td>
                                     </tr>
-                                    <!-- Modal Editar Barraca -->
-                                    <div class="modal fade" id="editTent<?php echo $tenda['id']; ?>" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content bg-dark border-secondary">
-                                                <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Barraca</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-                                                <div class="modal-body">
-                                                    <form method="POST">
-                                                        <input type="hidden" name="edit_tent" value="1">
-                                                        <input type="hidden" name="tent_id" value="<?php echo $tenda['id']; ?>">
-                                                        <div class="mb-3"><label class="form-label small text-muted">Nome da Barraca</label><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($tenda['name']); ?>" required></div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Faculdade Representante</label>
-                                                            <select name="faculty_id" class="form-select bg-dark text-white border-secondary" required>
-                                                                <option value="">Faculdade...</option>
-                                                                <?php foreach($faculdades as $fac): ?>
-                                                                    <option value="<?php echo $fac['id']; ?>" <?php echo $tenda['faculty_id'] == $fac['id'] ? 'selected' : ''; ?>><?php echo htmlspecialchars($fac['name']); ?></option>
-                                                                <?php endforeach; ?>
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Localização no Recinto</label><input type="text" name="localizacao" class="form-control" value="<?php echo htmlspecialchars($tenda['location']); ?>" required></div>
-                                                        <div class="row mb-3">
-                                                            <div class="col-6"><label class="form-label small text-muted">ABERTURA</label><input type="time" name="abertura" class="form-control" value="<?php echo date('H:i', strtotime($tenda['opening_hours'])); ?>" required></div>
-                                                            <div class="col-6"><label class="form-label small text-muted">FECHO</label><input type="time" name="fecho" class="form-control" value="<?php echo date('H:i', strtotime($tenda['closing_hours'])); ?>" required></div>
-                                                        </div>
-                                                        <div class="mb-3"><label class="form-label small text-muted">Descrição</label><textarea name="descricao" class="form-control" rows="2"><?php echo htmlspecialchars($tenda['description'] ?? ''); ?></textarea></div>
-                                                        <button type="submit" class="btn btn-warning w-100 fw-bold">GUARDAR ALTERAÇÕES</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -400,25 +300,6 @@
 Atenção: Barracas associadas podem ser afetadas.');">Apagar</a>
                                         </td>
                                     </tr>
-                                    <!-- Modal Editar -->
-                                    <div class="modal fade" id="editFac<?php echo $fac['id']; ?>" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content bg-dark border-secondary">
-                                                <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Faculdade</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-                                                <div class="modal-body">
-                                                    <form method="POST">
-                                                        <input type="hidden" name="edit_faculty" value="1">
-                                                        <input type="hidden" name="faculty_id" value="<?php echo $fac['id']; ?>">
-                                                        <div class="mb-3"><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($fac['name']); ?>" required></div>
-                                                        <div class="mb-3"><input type="text" name="acronimo" class="form-control" value="<?php echo htmlspecialchars($fac['acronym']); ?>" required></div>
-                                                        <div class="mb-3"><input type="text" name="cor" class="form-control" value="<?php echo htmlspecialchars($fac['colour'] ?? ''); ?>"></div>
-                                                        <div class="mb-3"><textarea name="descricao" class="form-control" rows="2"><?php echo htmlspecialchars($fac['description'] ?? ''); ?></textarea></div>
-                                                        <button type="submit" class="btn btn-primary w-100 fw-bold">GUARDAR ALTERAÇÕES</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -434,6 +315,138 @@ Atenção: Barracas associadas podem ser afetadas.');">Apagar</a>
 <footer class="mt-5 py-5 text-center text-muted border-top border-secondary">
     <p class="small">&copy; 2026 ADMIN CONSOLE — QUEIMA DAS FITAS DO PORTO</p>
 </footer>
+
+<!-- MODAIS DE EDIÇÃO -->
+<?php foreach($artistas as $art): ?>
+<!-- Modal Editar Artista -->
+<div class="modal fade" id="editArt<?php echo $art['id']; ?>" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary">
+            <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Artista</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="edit_artist" value="1">
+                    <input type="hidden" name="artist_id" value="<?php echo $art['id']; ?>">
+                    <div class="mb-3"><label class="form-label small text-muted">Nome</label><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($art['name']); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Género Musical</label><input type="text" name="genero" class="form-control" value="<?php echo htmlspecialchars($art['musical_genre']); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">País</label><input type="text" name="pais" class="form-control" value="<?php echo htmlspecialchars($art['country']); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Imagem</label><input type="file" name="imagem_artista" class="form-control" accept="image/*"><small class="text-muted d-block mt-1">Deixe em branco para manter a imagem atual</small></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Biografia Curta</label><textarea name="biografia" class="form-control" rows="3" required><?php echo htmlspecialchars($art['short_biography']); ?></textarea></div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">GUARDAR ALTERAÇÕES</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
+
+<?php foreach($eventos as $evento): ?>
+<!-- Modal Editar Evento -->
+<div class="modal fade" id="editEvt<?php echo $evento['id']; ?>" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary">
+            <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Evento</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="edit_event" value="1">
+                    <input type="hidden" name="event_id" value="<?php echo $evento['id']; ?>">
+                    <div class="mb-3"><label class="form-label small text-muted">Nome do Evento</label><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($evento['name']); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Tipo de Evento</label>
+                        <select name="tipo" class="form-select bg-dark text-white border-secondary" required>
+                            <option value="">Tipo de Evento...</option>
+                            <option value="Academic ceremony" <?php echo $evento['type'] === 'Academic ceremony' ? 'selected' : ''; ?>>Cerimónia Académica</option>
+                            <option value="Concert" <?php echo $evento['type'] === 'Concert' ? 'selected' : ''; ?>>Concerto</option>
+                            <option value="Cultural activity" <?php echo $evento['type'] === 'Cultural activity' ? 'selected' : ''; ?>>Atividade Cultural</option>
+                        </select>
+                    </div>
+                    <div class="mb-3"><label class="form-label small text-muted">Data/Hora</label><input type="datetime-local" name="data_hora" class="form-control" value="<?php echo date('Y-m-d\TH:i', strtotime($evento['date_time'])); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Recinto/Local</label><input type="text" name="localizacao" class="form-control" value="<?php echo htmlspecialchars($evento['location']); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Descrição</label><textarea name="descricao" class="form-control" rows="2"><?php echo htmlspecialchars($evento['description'] ?? ''); ?></textarea></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Imagem</label><input type="file" name="imagem_evento" class="form-control" accept="image/*"><small class="text-muted d-block mt-1">Deixe em branco para manter a imagem atual</small></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Associar à Barraca</label>
+                        <select name="tent_id" class="form-select bg-dark text-white border-secondary">
+                            <option value="">Nenhuma barraca</option>
+                            <?php foreach($tendas as $tenda): ?>
+                                <option value="<?php echo $tenda['id']; ?>" <?php echo $evento['tent_id'] == $tenda['id'] ? 'selected' : ''; ?>><?php echo htmlspecialchars($tenda['name']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3"><label class="form-label small text-muted">ARTISTAS (para Concertos)</label>
+                        <div class="bg-dark p-2 rounded border border-secondary" style="max-height:120px;overflow-y:auto;">
+                            <?php 
+                            $artistas_evento = getEventArtists($pdo, $evento['id']);
+                            $ids_artistas_evento = array_column($artistas_evento, 'id');
+                            foreach($artistas as $art): 
+                            ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="artistas[]" value="<?php echo $art['id']; ?>" id="art_evt_<?php echo $evento['id']; ?>_<?php echo $art['id']; ?>" <?php echo in_array($art['id'], $ids_artistas_evento) ? 'checked' : ''; ?>>
+                                    <label class="form-check-label small text-white" for="art_evt_<?php echo $evento['id']; ?>_<?php echo $art['id']; ?>"><?php echo htmlspecialchars($art['name']); ?></label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold" style="background: var(--neon-green); color: black; border: none;">GUARDAR ALTERAÇÕES</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
+
+<?php foreach($tendas_detalhadas as $tenda): ?>
+<!-- Modal Editar Barraca -->
+<div class="modal fade" id="editTent<?php echo $tenda['id']; ?>" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary">
+            <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Barraca</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form method="POST">
+                    <input type="hidden" name="edit_tent" value="1">
+                    <input type="hidden" name="tent_id" value="<?php echo $tenda['id']; ?>">
+                    <div class="mb-3"><label class="form-label small text-muted">Nome da Barraca</label><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($tenda['name']); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Faculdade Representante</label>
+                        <select name="faculty_id" class="form-select bg-dark text-white border-secondary" required>
+                            <option value="">Faculdade...</option>
+                            <?php foreach($faculdades as $fac): ?>
+                                <option value="<?php echo $fac['id']; ?>" <?php echo $tenda['faculty_id'] == $fac['id'] ? 'selected' : ''; ?>><?php echo htmlspecialchars($fac['name']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3"><label class="form-label small text-muted">Localização no Recinto</label><input type="text" name="localizacao" class="form-control" value="<?php echo htmlspecialchars($tenda['location']); ?>" required></div>
+                    <div class="row mb-3">
+                        <div class="col-6"><label class="form-label small text-muted">ABERTURA</label><input type="time" name="abertura" class="form-control" value="<?php echo date('H:i', strtotime($tenda['opening_hours'])); ?>" required></div>
+                        <div class="col-6"><label class="form-label small text-muted">FECHO</label><input type="time" name="fecho" class="form-control" value="<?php echo date('H:i', strtotime($tenda['closing_hours'])); ?>" required></div>
+                    </div>
+                    <div class="mb-3"><label class="form-label small text-muted">Descrição</label><textarea name="descricao" class="form-control" rows="2"><?php echo htmlspecialchars($tenda['description'] ?? ''); ?></textarea></div>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold">GUARDAR ALTERAÇÕES</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
+
+<?php foreach($faculdades as $fac): ?>
+<!-- Modal Editar Faculdade -->
+<div class="modal fade" id="editFac<?php echo $fac['id']; ?>" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary">
+            <div class="modal-header border-secondary"><h5 class="modal-title text-white">Editar Faculdade</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form method="POST">
+                    <input type="hidden" name="edit_faculty" value="1">
+                    <input type="hidden" name="faculty_id" value="<?php echo $fac['id']; ?>">
+                    <div class="mb-3"><input type="text" name="nome" class="form-control" value="<?php echo htmlspecialchars($fac['name']); ?>" required></div>
+                    <div class="mb-3"><input type="text" name="acronimo" class="form-control" value="<?php echo htmlspecialchars($fac['acronym']); ?>" required></div>
+                    <div class="mb-3"><input type="text" name="cor" class="form-control" value="<?php echo htmlspecialchars($fac['colour'] ?? ''); ?>"></div>
+                    <div class="mb-3"><textarea name="descricao" class="form-control" rows="2"><?php echo htmlspecialchars($fac['description'] ?? ''); ?></textarea></div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">GUARDAR ALTERAÇÕES</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
 
 <script>
 // Validação Bootstrap
