@@ -60,11 +60,12 @@
                     <div class="card event-card shadow-lg">
                         <div class="card-header bg-transparent border-0 pt-4 px-4 text-primary">ADICIONAR ARTISTA</div>
                         <div class="card-body p-4">
-                            <form method="POST">
+                            <form method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="add_artist" value="1">
                                 <div class="mb-3"><input type="text" name="nome" class="form-control" required placeholder="Nome do Artista"></div>
                                 <div class="mb-3"><input type="text" name="genero" class="form-control" required placeholder="Género Musical"></div>
                                 <div class="mb-3"><input type="text" name="pais" class="form-control" required placeholder="País"></div>
+                                <div class="mb-3"><input type="file" name="imagem_artista" class="form-control" accept="image/*"></div>
                                 <div class="mb-4"><textarea name="biografia" class="form-control" rows="3" required placeholder="Biografia Curta"></textarea></div>
                                 <button type="submit" class="btn btn-primary w-100 fw-bold">GUARDAR ARTISTA</button>
                             </form>
@@ -111,7 +112,7 @@
                     <div class="card event-card border-0">
                         <div class="card-header bg-transparent pt-4 px-4 text-success">CRIAR EVENTO</div>
                         <div class="card-body p-4">
-                            <form method="POST">
+                            <form method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="add_event" value="1">
                                 <div class="mb-3"><input type="text" name="nome" class="form-control" required placeholder="Nome do Evento"></div>
                                 <div class="mb-3">
@@ -124,6 +125,7 @@
                                 </div>
                                 <div class="mb-3"><input type="datetime-local" name="data_hora" class="form-control" required></div>
                                 <div class="mb-3"><input type="text" name="localizacao" class="form-control" required placeholder="Recinto/Local"></div>
+                                <div class="mb-3"><input type="file" name="imagem_evento" class="form-control" accept="image/*"></div>
                                 <div class="mb-4">
                                     <select name="tent_id" class="form-select bg-dark text-white border-secondary">
                                         <option value="">Associar à Barraca (Opcional)</option>
