@@ -103,6 +103,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_artist'])) {
     }
 }
 
+// ARTISTAS - EDIT
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_artist'])) {
+    if (empty($_POST['nome']) || empty($_POST['genero']) || empty($_POST['pais']) || empty($_POST['biografia']) || empty($_POST['artist_id'])) {
+        $erro = "Dados incompletos para edição de artista.";
+    } else {
+        $artista_atual = getArtistById($pdo, $_POST['artist_id']);
+        $imagem_artista = $artista_atual['image'];
+        
+        if (isset($_FILES['imagem_artista']) && $_FILES['imagem_artista']['error'] == UPLOAD_ERR_OK) {
+            $ficheiro_tmp = $_FILES['imagem_artista']['tmp_name'];
+            $extensao = strtolower(pathinfo($_FILES['imagem_artista']['name'], PATHINFO_EXTENSION));
+            $nome_unico = uniqid('artist_') . '.' . $extensao;
+            $caminho_destino = 'uploads/' . $nome_unico;
+            if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
+                $imagem_artista = $nome_unico;
+            }
+        }
+        
+        if (updateArtist($pdo, $_POST['artist_id'], trim($_POST['nome']), trim($_POST['genero']), trim($_POST['pais']), trim($_POST['biografia']), $imagem_artista)) {
+            $sucesso = "Artista atualizado com sucesso!";
+        } else {
+            $erro = "Erro ao atualizar artista.";
+        }
+    }
+}
+
 // ==========================================
 // EVENTOS - DELETE
 // ==========================================
@@ -139,6 +165,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_event'])) {
     }
 }
 
+// EVENTOS - EDIT
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_event'])) {
+    if (empty($_POST['nome']) || empty($_POST['tipo']) || empty($_POST['data_hora']) || empty($_POST['localizacao']) || empty($_POST['event_id'])) {
+        $erro = "Dados incompletos para edição de evento.";
+    } else {
+        $evento_atual = getEventByIdFull($pdo, $_POST['event_id']);
+        $imagem_evento = $evento_atual['image'];
+        
+        if (isset($_FILES['imagem_evento']) && $_FILES['imagem_evento']['error'] == UPLOAD_ERR_OK) {
+            $ficheiro_tmp = $_FILES['imagem_evento']['tmp_name'];
+            $extensao = strtolower(pathinfo($_FILES['imagem_evento']['name'], PATHINFO_EXTENSION));
+            $nome_unico = uniqid('event_') . '.' . $extensao;
+            $caminho_destino = 'uploads/' . $nome_unico;
+            if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
+                $imagem_evento = $nome_unico;
+            }
+        }
+        
+        $tent_id = !empty($_POST['tent_id']) ? $_POST['tent_id'] : NULL;
+        $artistas_selecionados = isset($_POST['artistas']) ? $_POST['artistas'] : [];
+        
+        if (updateEvent($pdo, $_POST['event_id'], $tent_id, trim($_POST['nome']), trim($_POST['descricao']), $_POST['data_hora'], trim($_POST['localizacao']), $_POST['tipo'], $artistas_selecionados, $imagem_evento)) {
+            $sucesso = "Evento atualizado com sucesso!";
+        } else {
+            $erro = "Erro ao atualizar evento.";
+        }
+    }
+}
+
 // ==========================================
 // BARRACAS - DELETE
 // ==========================================
@@ -157,6 +212,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_tent'])) {
             $sucesso = "Barraca adicionada!";
         } else {
             $erro = "Erro ao adicionar barraca.";
+        }
+    }
+}
+
+// BARRACAS - EDIT
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_tent'])) {
+    if (empty($_POST['nome']) || empty($_POST['faculty_id']) || empty($_POST['localizacao']) || empty($_POST['abertura']) || empty($_POST['fecho']) || empty($_POST['tent_id'])) {
+        $erro = "Dados incompletos para edição de barraca.";
+    } else {
+        if (updateTent($pdo, $_POST['tent_id'], $_POST['faculty_id'], trim($_POST['nome']), trim($_POST['localizacao']), $_POST['abertura'], $_POST['fecho'], trim($_POST['descricao']))) {
+            $sucesso = "Barraca atualizada com sucesso!";
+        } else {
+            $erro = "Erro ao atualizar barraca.";
         }
     }
 }

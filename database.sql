@@ -53,7 +53,8 @@ CREATE TABLE Event (
     description TEXT,
     date_time DATETIME NOT NULL,
     location VARCHAR(255) NOT NULL,
-    type VARCHAR(100) NOT NULL, 
+    type VARCHAR(100) NOT NULL,
+    image VARCHAR(255) DEFAULT 'default.jpg',
     FOREIGN KEY (tent_id) REFERENCES Tent(id) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
@@ -63,7 +64,8 @@ CREATE TABLE Artist (
     name VARCHAR(150) NOT NULL,
     musical_genre VARCHAR(100) NOT NULL,
     country VARCHAR(100) NOT NULL,
-    short_biography TEXT NOT NULL
+    short_biography TEXT NOT NULL,
+    image VARCHAR(255) DEFAULT 'default.jpg'
 ) ENGINE=InnoDB;
 
 -- Tabela Associativa: Artistas nos Eventos [cite: 22, 68, 83]
@@ -91,6 +93,7 @@ CREATE TABLE Rating (
     event_id INT DEFAULT NULL,
     tent_id INT DEFAULT NULL,
     value INT NOT NULL CHECK (value >= 1 AND value <= 5),
+    comment TEXT NULL,
     CONSTRAINT CHK_Rating_Target CHECK (
         (event_id IS NOT NULL AND tent_id IS NULL) OR 
         (event_id IS NULL AND tent_id IS NOT NULL)
@@ -120,15 +123,15 @@ INSERT INTO Tent (id, faculty_id, name, location, opening_hours, closing_hours, 
 (1, 1, 'Barraca da FEUP', 'Praça Central', '20:00:00', '06:00:00', 'A barraca com mais pujança!'),
 (2, 2, 'Barraca da FEP', 'Rua B', '20:00:00', '06:00:00', 'As melhores bebidas da Queima.');
 
-INSERT INTO Event (id, tent_id, name, description, date_time, location, type) VALUES
-(1, NULL, 'Monumental Serenata', 'Abertura oficial da Queima das Fitas.', '2026-05-03 00:01:00', 'Cordoaria', 'Academic ceremony'),
-(2, NULL, 'Cortejo Académico', 'Desfile das faculdades pela cidade.', '2026-05-05 14:00:00', 'Baixa do Porto', 'Academic ceremony'),
-(3, 1, 'Noite de Engenharia', 'Festa especial na barraca da FEUP.', '2026-05-06 22:00:00', 'Queimódromo', 'Cultural activity'),
-(4, NULL, 'Concerto Quim Barreiros', 'O clássico concerto de terça-feira.', '2026-05-05 23:30:00', 'Palco Principal', 'Concert');
+INSERT INTO Event (id, tent_id, name, description, date_time, location, type, image) VALUES
+(1, NULL, 'Monumental Serenata', 'Abertura oficial da Queima das Fitas.', '2026-05-03 00:01:00', 'Cordoaria', 'Academic ceremony', 'default.jpg'),
+(2, NULL, 'Cortejo Académico', 'Desfile das faculdades pela cidade.', '2026-05-05 14:00:00', 'Baixa do Porto', 'Academic ceremony', 'default.jpg'),
+(3, 1, 'Noite de Engenharia', 'Festa especial na barraca da FEUP.', '2026-05-06 22:00:00', 'Queimódromo', 'Cultural activity', 'default.jpg'),
+(4, NULL, 'Concerto Quim Barreiros', 'O clássico concerto de terça-feira.', '2026-05-05 23:30:00', 'Palco Principal', 'Concert', 'default.jpg');
 
-INSERT INTO Artist (id, name, musical_genre, country, short_biography) VALUES
-(1, 'Quim Barreiros', 'Música Popular', 'Portugal', 'O mestre do acordeão.'),
-(2, 'Slow J', 'Hip-Hop', 'Portugal', 'Artista de grande renome.');
+INSERT INTO Artist (id, name, musical_genre, country, short_biography, image) VALUES
+(1, 'Quim Barreiros', 'Música Popular', 'Portugal', 'O mestre do acordeão.', 'default.jpg'),
+(2, 'Slow J', 'Hip-Hop', 'Portugal', 'Artista de grande renome.', 'default.jpg');
 
 INSERT INTO Event_Artist (event_id, artist_id) VALUES (4, 1);
 INSERT INTO PersonalAgenda (user_id, event_id) VALUES (2, 1), (2, 4);
