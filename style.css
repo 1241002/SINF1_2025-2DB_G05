@@ -4,46 +4,56 @@
     --neon-green: #29ff00;
     --neon-blue: #0099ff;
     --neon-red: #ff3100;
+    --neon-purple: #bd00ff;
     --glass-bg: rgba(255, 255, 255, 0.05);
+    --queima-black: #0a0a0a;
 }
 
+* { scrollbar-width: thin; scrollbar-color: var(--neon-blue) #111; }
+*::-webkit-scrollbar { width: 8px; }
+*::-webkit-scrollbar-track { background: #111; }
+*::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 4px; }
+
 body {
-    background: radial-gradient(circle at top right, #111, #000);
+    background: radial-gradient(circle at top right, #1a1a1a, #000);
     color: #fff;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
-h1, h2, .navbar-brand { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+h1, h2, .navbar-brand { font-family: 'Syne', sans-serif; text-transform: uppercase; letter-spacing: -1px; }
 
-/* Navbar com efeito Blur */
+/* Navbar */
 .navbar {
-    backdrop-filter: blur(15px);
-    background: rgba(0,0,0,0.8) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.3s;
+    backdrop-filter: blur(20px);
+    background: rgba(0,0,0,0.85) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s ease;
 }
 
-/* Card de Evento "Glow" */
+.navbar-brand { letter-spacing: -2px; }
+
+/* Cards */
 .event-card {
     background: var(--glass-bg);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 20px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
 }
 
 .event-card:hover {
-    transform: scale(1.03);
+    transform: scale(1.02) translateY(-5px);
     border-color: var(--neon-green);
-    box-shadow: 0 0 30px rgba(41, 255, 0, 0.2);
+    box-shadow: 0 10px 40px rgba(41, 255, 0, 0.15);
 }
 
-/* Imagem do Evento */
 .event-img-container {
-    height: 200px;
+    height: 220px;
     overflow: hidden;
-    border-radius: 15px 15px 0 0;
+    border-radius: 20px 20px 0 0;
     position: relative;
 }
 
@@ -51,48 +61,147 @@ h1, h2, .navbar-brand { font-family: 'Syne', sans-serif; text-transform: upperca
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s;
+    transition: transform 0.6s ease;
 }
 
 .event-card:hover .event-img { transform: scale(1.1); }
 
-/* Badge de 48h com pulsação */
+/* Badges */
 .badge-48h {
     background: var(--neon-red);
     animation: pulse 2s infinite;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border-radius: 50px;
 }
 
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(255, 49, 0, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(255, 49, 0, 0); }
+    70% { box-shadow: 0 0 0 12px rgba(255, 49, 0, 0); }
     100% { box-shadow: 0 0 0 0 rgba(255, 49, 0, 0); }
 }
 
-/* Botões Modernos */
+/* Botões */
 .btn-primary { 
     background: var(--neon-blue); 
     border: none; 
-    border-radius: 10px; 
-    font-weight: bold; 
+    border-radius: 12px; 
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
 }
 
-/* Estilos extra para formulários no style.css */
-.form-control {
+.btn-primary:hover { 
+    background: #007acc; 
+    box-shadow: 0 0 20px rgba(0, 153, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-bilhetes {
+    background: transparent;
+    color: var(--neon-red);
+    border: 2px solid var(--neon-red);
+    border-radius: 50px;
+    padding: 8px 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn-bilhetes:hover {
+    background: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 49, 0, 0.4);
+}
+
+/* Formulários */
+.form-control, .form-select {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #fff !important;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 12px;
+    transition: all 0.3s;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
     background: rgba(255, 255, 255, 0.1) !important;
     border-color: var(--neon-blue) !important;
-    box-shadow: 0 0 10px rgba(0, 153, 255, 0.3) !important;
+    box-shadow: 0 0 15px rgba(0, 153, 255, 0.2) !important;
 }
 
+.form-control::placeholder { color: rgba(255,255,255,0.3); }
+
+/* Login */
 .login-container {
     background: radial-gradient(circle at center, #111 0%, #000 100%);
     min-height: 100vh;
 }
-.btn-primary:hover { background: #007acc; box-shadow: 0 0 15px var(--neon-blue); }
+
+/* Títulos */
+.highlight-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, var(--neon-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    display: inline-block;
+}
+
+.highlight-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--neon-green);
+    border-radius: 2px;
+}
+
+/* Links */
+.hover-underline { position: relative; }
+.hover-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--neon-green);
+    transition: width 0.3s;
+}
+.hover-underline:hover::after { width: 100%; }
+
+/* Tabelas */
+.table { color: #ccc; border-color: rgba(255,255,255,0.1); }
+.table thead th { border-bottom: 2px solid rgba(255,255,255,0.1); font-family: 'Syne', sans-serif; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+.table tbody td { border-color: rgba(255,255,255,0.05); vertical-align: middle; }
+
+/* Animações de entrada */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.event-card { animation: fadeInUp 0.6s ease forwards; }
+
+/* Responsividade extra */
+@media (max-width: 768px) {
+    .highlight-title { font-size: 1.8rem; }
+    .event-img-container { height: 180px; }
+    .stat-number { font-size: 1.8rem !important; }
+}
+
+/* Validação Bootstrap customizada */
+.was-validated .form-control:invalid, .was-validated .form-select:invalid {
+    border-color: var(--neon-red) !important;
+}
+.was-validated .form-control:valid, .was-validated .form-select:valid {
+    border-color: var(--neon-green) !important;
+}

@@ -1,11 +1,11 @@
 <?php
-// index.php (O Controller)
+// index.php (Controller)
 
 session_start();
 require_once 'db.php';
-require_once 'models/IndexModel.php'; // Incluímos a camada de dados
+require_once 'models/IndexModel.php';
+require_once 'models/AdminModel.php'; // <-- A LINHA QUE FALTAVA!
 
-// 1. PROTEÇÃO
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -15,29 +15,33 @@ $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
 $is_admin = ($_SESSION['user_role'] == 1);
 
-// 2. LÓGICA DA AGENDA PESSOAL
+// LÓGICA DA AGENDA
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['toggle_agenda'])) {
     toggleAgenda($pdo, $user_id, $_POST['evento_id'], $_POST['acao']);
-    header("Location: index.php");
+    header("Location: index.php?" . $_SERVER['QUERY_STRING']);
     exit();
 }
 
-// 3. LÓGICA DE AVALIAÇÃO (RATING)
+// LÓGICA DE AVALIAÇÃO COM COMENTÁRIO
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rate_event'])) {
-    rateEvent($pdo, $user_id, $_POST['evento_id'], (int)$_POST['rating_value']);
-    header("Location: index.php");
+    $comentario = !empty($_POST['rating_comment']) ? trim($_POST['rating_comment']) : null;
+    rateEvent($pdo, $user_id, $_POST['evento_id'], (int)$_POST['rating_value'], $comentario);
+    header("Location: index.php?" . $_SERVER['QUERY_STRING']);
     exit();
 }
 
-// 4. IR BUSCAR DADOS
-// Vê que ordenação o utilizador escolheu (se não houver nenhuma, usa 'data' por defeito)
+// PARÂMETROS DE PESQUISA E FILTRO
 $ordenacao = isset($_GET['sort']) ? $_GET['sort'] : 'data';
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$tipo_filtro = isset($_GET['tipo']) ? $_GET['tipo'] : '';
+$faculty_filtro = isset($_GET['faculty']) ? $_GET['faculty'] : '';
 
-// Vai buscar os eventos ao Model JÁ ORDENADOS!
-$eventos = getEventsWithRatings($pdo, $ordenacao);
+// BUSCAR DADOS
+$eventos = getEventsWithRatings($pdo, $ordenacao, $search, $tipo_filtro, $faculty_filtro);
+$tipos_evento = getEventTypes($pdo);
+$faculdades = getFaculties($pdo);
 $minha_agenda = getUserAgendaIds($pdo, $user_id);
 $meus_ratings = getUserRatings($pdo, $user_id);
+$meus_comentarios = getUserRatingComments($pdo, $user_id);
 
-// 5. CARREGAR A VIEW
 include 'views/index_view.php';
-?>
