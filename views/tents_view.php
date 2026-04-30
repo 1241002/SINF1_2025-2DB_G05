@@ -86,18 +86,18 @@
 
                         <div class="mb-4">
                             <p class="small text-secondary mb-1">📍 LOCALIZAÇÃO</p>
-                            <p class="fw-bold"><?php echo htmlspecialchars($tenda['location']); ?></p>
+                            <p class="fw-bold text-white"><?php echo htmlspecialchars($tenda['location']); ?></p>
                             <p class="small text-secondary mb-1 mt-3">🕒 HORÁRIO</p>
                             <p class="fw-bold" style="color: var(--neon-blue)"><?php echo date('H:i', strtotime($tenda['opening_hours'])) . ' — ' . date('H:i', strtotime($tenda['closing_hours'])); ?></p>
                         </div>
 
                         <div class="p-3 rounded mb-4" style="background: rgba(255,255,255,0.03); min-height: 80px;">
-                            <p class="small text-muted mb-0 italic">"<?php echo htmlspecialchars($tenda['description']); ?>"</p>
+                            <p class="small text-white-50 mb-0 italic">"<?php echo htmlspecialchars($tenda['description']); ?>"</p>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="fs-4 fw-bold text-warning">⭐ <?php echo number_format($tenda['media_rating'], 1); ?></span>
-                            <span class="small text-muted text-uppercase"><?php echo $tenda['total_votos']; ?> votos</span>
+                            <span class="small text-white-50 text-uppercase"><?php echo $tenda['total_votos']; ?> votos</span>
                         </div>
 
                         <?php if(!empty($comentarios_tenda)): ?>
@@ -124,11 +124,11 @@
                             <input type="hidden" name="rate_tent" value="1">
                             <input type="hidden" name="tent_id" value="<?php echo $tenda['id']; ?>">
                             <div class="d-flex gap-2">
-                                <select name="rating_value" class="form-select bg-dark text-white border-secondary small" required>
-                                    <option value="">Nota...</option>
+                                <select name="rating_value" data-bs-theme="dark" class="form-select bg-dark text-white border-secondary" required>
+                                    <option value="" class="bg-dark text-white" style="background-color: #212529; color: #fff;">Nota...</option>
                                     <?php $minha_nota = $meus_ratings[$tenda['id']] ?? null; ?>
                                     <?php for($i=5; $i>=1; $i--): ?>
-                                        <option value="<?php echo $i; ?>" <?php if($minha_nota==$i) echo 'selected'; ?>><?php echo $i; ?> Estrelas</option>
+                                        <option value="<?php echo $i; ?>" class="bg-dark text-white" style="background-color: #212529; color: #fff;" <?php if($minha_nota==$i) echo 'selected'; ?>><?php echo $i; ?> Estrelas</option>
                                     <?php endfor; ?>
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm fw-bold px-3" style="background: var(--neon-green); border:none; color:black; white-space:nowrap;">AVALIAR</button>

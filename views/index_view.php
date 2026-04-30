@@ -18,6 +18,7 @@
         .star-rating:hover { transform: scale(1.2); }
         .filter-select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 10px; padding: 8px 12px; }
         .filter-select:focus { border-color: var(--neon-blue); outline: none; }
+        select option { background-color: #212529 !important; color: white !important; }
         .comment-box { background: rgba(255,255,255,0.03); border-left: 3px solid var(--neon-green); padding: 10px; border-radius: 0 8px 8px 0; margin-top: 10px; }
     </style>
 </head>
@@ -25,7 +26,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
     <div class="container">
-        <a class="navbar-brand fs-2 fw-bold" href="index.php">QUEIMA<span style="color:var(--neon-blue)">'26</span></a>
+        <a class="navbar-brand fs-2 fw-bold" href="index.php">QUEIMA<span class="text-primary">'26</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,7 +49,16 @@
     </div>
 </nav>
 
-<div class="container mt-5 pt-4">
+<section id="hero" style="background: linear-gradient(rgba(10, 10, 15, 0.7), rgba(10, 10, 15, 0.9)), url('uploads/capa.jpg'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh;" class="position-relative d-flex flex-column align-items-center justify-content-center text-center">
+    <div class="container">
+        <h1 class="display-1 fw-bold text-white mb-2" style="letter-spacing: 2px;">QUEIMA <span class="text-primary">26</span></h1>
+        <h2 class="text-white fw-light mb-4">das Fitas do Porto</h2>
+        <a href="#programa" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill fw-bold" style="backdrop-filter: blur(5px);">Descobrir o Programa</a>
+    </div>
+</section>
+
+<section id="programa" class="pt-5" style="min-height: 100vh;">
+    <div class="container mt-5 pt-4">
     <!-- Cabeçalho com Pesquisa e Filtros -->
     <div class="row mb-5 align-items-end">
         <div class="col-lg-4 mb-3 mb-lg-0">
@@ -159,7 +169,7 @@
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="fs-4 fw-bold text-warning">⭐ <?php echo number_format($evento['media_rating'], 1); ?></span>
-                            <span class="small text-muted text-uppercase"><?php echo $evento['total_votos']; ?> votos</span>
+                            <span class="small text-white-50 text-uppercase"><?php echo $evento['total_votos']; ?> votos</span>
                         </div>
 
                         <!-- Sistema de Rating com Estrelas -->
@@ -167,12 +177,12 @@
                             <input type="hidden" name="rate_event" value="1">
                             <input type="hidden" name="evento_id" value="<?php echo $evento['id']; ?>">
                             <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="small text-muted">Avalia:</span>
-                                <select name="rating_value" class="form-select form-select-sm bg-dark text-white border-secondary" style="width:auto;" required>
-                                    <option value="">★</option>
+                                <span class="small text-white-50">Avalia:</span>
+                                <select name="rating_value" data-bs-theme="dark" class="form-select form-select-sm bg-dark text-white border-secondary" style="width:auto;" required>
+                                    <option value="" class="bg-dark text-white" style="background-color: #212529; color: #fff;">★</option>
                                     <?php $minha_nota = $meus_ratings[$evento['id']] ?? null; ?>
                                     <?php for($i=5; $i>=1; $i--): ?>
-                                        <option value="<?php echo $i; ?>" <?php if($minha_nota==$i) echo 'selected'; ?>><?php echo $i; ?> ★</option>
+                                        <option value="<?php echo $i; ?>" class="bg-dark text-white" style="background-color: #212529; color: #fff;" <?php if($minha_nota==$i) echo 'selected'; ?>><?php echo $i; ?> ★</option>
                                     <?php endfor; ?>
                                 </select>
                             </div>
@@ -201,6 +211,7 @@
         <?php endforeach; ?>
     </div>
 </div>
+</section>
 
 <footer class="mt-5 py-5 border-top border-secondary text-center text-muted">
     <p class="small">&copy; 2026 QUEIMA DAS FITAS DO PORTO — SINF1 PROJECT</p>

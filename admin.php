@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 1) {
 
 $sucesso = "";
 $erro = "";
-$aba_ativa = $_GET['tab'] ?? 'dashboard';
+$aba_ativa = $_POST['tab'] ?? $_GET['tab'] ?? 'dashboard';
 
 // ==========================================
 // EXPORTAR ARTISTAS PARA CSV
