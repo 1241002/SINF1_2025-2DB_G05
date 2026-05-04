@@ -90,7 +90,7 @@
                 <div class="col-lg-4 col-md-6 mb-5">
                     <div class="card event-card h-100 shadow-lg">
                         <div class="event-img-container">
-                            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&auto=format" class="event-img" alt="Festival">
+                            <img src="uploads/<?php echo htmlspecialchars($evento['image'] ?? 'default.jpg'); ?>" class="event-img" alt="<?php echo htmlspecialchars($evento['name']); ?>" onerror="this.src='https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&auto=format'">
                             <div class="position-absolute top-0 start-0 m-3">
                                 <span class="badge bg-dark py-2 px-3 border border-secondary">
                                     <?php echo date('d M', strtotime($evento['date_time'])); ?>
@@ -99,13 +99,13 @@
                         </div>
 
                         <div class="card-body p-4">
-                            <h4 class="card-title mb-1"><?php echo htmlspecialchars($evento['name']); ?></h4>
+                            <h4 class="card-title mb-1 text-white"><?php echo htmlspecialchars($evento['name']); ?></h4>
                             <p class="small fw-bold mb-3" style="color: var(--neon-blue)">
                                 🕒 <?php echo date('H:i', strtotime($evento['date_time'])); ?>
                             </p>
                             
                             <p class="small text-secondary mb-1 text-uppercase fw-bold">📍 Localização</p>
-                            <p class="fw-bold mb-3"><?php echo htmlspecialchars($evento['location']); ?></p>
+                            <p class="fw-bold mb-3 text-white"><?php echo htmlspecialchars($evento['location']); ?></p>
 
                             <?php if($evento['tent_name']): ?>
                                 <p class="small text-secondary mb-1 text-uppercase fw-bold">🎪 Barraca</p>

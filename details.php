@@ -3,6 +3,7 @@
 session_start();
 require_once 'db.php';
 require_once 'models/DetailsModel.php';
+require_once 'models/TentsModel.php';
 
 $type = $_GET['type'] ?? '';
 $id = $_GET['id'] ?? 0;
@@ -17,6 +18,7 @@ if ($type === 'artist') {
 } elseif ($type === 'tent') {
     $data = getTentById($pdo, $id);
     $title = "Barraca: " . ($data['name'] ?? 'Não encontrada');
+    $ratings_summary = getTentRatingsSummary($pdo, $id);
     $comentarios = getTentComments($pdo, $id);
 } elseif ($type === 'event') {
     $data = getEventById($pdo, $id);

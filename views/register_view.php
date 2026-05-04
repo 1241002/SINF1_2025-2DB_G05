@@ -50,7 +50,7 @@
 
                         <div class="mb-4">
                             <label class="form-label small text-secondary fw-bold text-uppercase">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Escolhe uma forte" required>
+                            <input type="password" name="password" class="form-control" placeholder="Escolhe uma forte" required minlength="6">
                         </div>
                         
                         <button type="submit" class="btn btn-primary w-100 py-3 fw-bold text-uppercase" style="letter-spacing: 1px; background: var(--neon-green); border-color: var(--neon-green); color: black;">

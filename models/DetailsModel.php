@@ -50,3 +50,11 @@ function getEventComments($pdo, $event_id) {
     $stmt->execute([$event_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function getTentRatingsSummary($pdo, $tent_id) {
+    $stmt = $pdo->prepare("
+        SELECT COALESCE(AVG(value), 0) as media, COUNT(*) as total FROM Rating WHERE tent_id = ?
+    ");
+    $stmt->execute([$tent_id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
