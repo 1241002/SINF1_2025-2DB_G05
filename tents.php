@@ -31,5 +31,9 @@ $tendas = getTentsWithRatings($pdo, $search, $faculty_filtro);
 $faculdades = getFaculties($pdo);
 $meus_ratings = getUserTentRatings($pdo, $user_id);
 $meus_comentarios = getUserTentComments($pdo, $user_id);
+$comentarios_por_tenda = [];
+foreach ($tendas as $tenda) {
+    $comentarios_por_tenda[$tenda['id']] = getTentComments($pdo, $tenda['id']);
+}
 
 include 'views/tents_view.php';

@@ -110,7 +110,7 @@
         <?php foreach($eventos as $evento): 
             $event_time = strtotime($evento['date_time']);
             $diferenca_horas = ($event_time - time()) / 3600;
-            $artistas_nomes = getEventArtistsNames($pdo, $evento['id']);
+            $artistas_nomes = $nomes_artistas_por_evento[$evento['id']] ?? [];
             $evento_passado = $event_time < time();
         ?>
             <div class="col-lg-4 col-md-6 mb-5">

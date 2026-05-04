@@ -411,7 +411,7 @@ Atenção: Barracas associadas podem ser afetadas.');">Apagar</a>
                     <div class="mb-3"><label class="form-label small text-muted">ARTISTAS (para Concertos)</label>
                         <div class="bg-dark p-2 rounded border border-secondary" style="max-height:120px;overflow-y:auto;">
                             <?php 
-                            $artistas_evento = getEventArtists($pdo, $evento['id']);
+                            $artistas_evento = $artistas_por_evento[$evento['id']] ?? [];
                             $ids_artistas_evento = array_column($artistas_evento, 'id');
                             foreach($artistas as $art): 
                             ?>

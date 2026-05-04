@@ -74,7 +74,7 @@
         <?php endif; ?>
 
         <?php foreach($tendas as $tenda): 
-            $comentarios_tenda = getTentComments($pdo, $tenda['id']);
+            $comentarios_tenda = $comentarios_por_tenda[$tenda['id']] ?? [];
         ?>
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="card event-card h-100 shadow-lg">

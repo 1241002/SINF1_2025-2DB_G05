@@ -43,5 +43,9 @@ $faculdades = getFaculties($pdo);
 $minha_agenda = getUserAgendaIds($pdo, $user_id);
 $meus_ratings = getUserRatings($pdo, $user_id);
 $meus_comentarios = getUserRatingComments($pdo, $user_id);
+$nomes_artistas_por_evento = [];
+foreach ($eventos as $evento) {
+    $nomes_artistas_por_evento[$evento['id']] = getEventArtistsNames($pdo, $evento['id']);
+}
 
 include 'views/index_view.php';

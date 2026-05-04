@@ -267,6 +267,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_faculty'])) {
 // ==========================================
 $artistas = getArtists($pdo);
 $eventos = getEvents($pdo);
+$artistas_por_evento = [];
+foreach ($eventos as $evento) {
+    $artistas_por_evento[$evento['id']] = getEventArtists($pdo, $evento['id']);
+}
 $tendas = getTents($pdo);
 $faculdades = getFaculties($pdo);
 $tendas_detalhadas = getDetailedTents($pdo);
