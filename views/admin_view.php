@@ -26,7 +26,7 @@
     <div class="container">
         <a class="navbar-brand fs-2 fw-bold" href="index.php">QUEIMA<span style="color:var(--neon-blue)">'26</span></a>
         <div class="d-flex align-items-center">
-            <span class="text-muted small fw-bold me-3 text-uppercase">Painel de Controlo</span>
+            <span class="text-white small fw-bold me-3 text-uppercase">Painel de Controlo</span>
             <a href="index.php" class="btn btn-outline-light btn-sm me-2">Voltar ao Site</a>
             <a href="logout.php" class="btn btn-bilhetes">Sair</a>
         </div>
@@ -66,19 +66,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card event-card p-4">
-                        <h6 class="text-neon-green fw-bold text-uppercase mb-3">🏆 Evento Melhor Classificado</h6>
+                        <h6 class="text-white-50 fw-bold text-uppercase mb-3">🏆 Evento Melhor Classificado</h6>
                         <?php if($estatisticas['top_event']): ?>
                             <h4 class="text-white fw-bold"><?php echo htmlspecialchars($estatisticas['top_event']['name']); ?></h4>
-                            <p class="text-muted mb-0">⭐ <?php echo number_format($estatisticas['top_event']['media'],1); ?> (<?php echo $estatisticas['top_event']['votos']; ?> votos)</p>
+                            <p class="text-white-50 mb-0">⭐ <?php echo number_format($estatisticas['top_event']['media'],1); ?> (<?php echo $estatisticas['top_event']['votos']; ?> votos)</p>
                         <?php else: ?><p class="text-muted">Sem dados suficientes.</p><?php endif; ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card event-card p-4">
-                        <h6 class="text-neon-blue fw-bold text-uppercase mb-3">🏆 Barraca Melhor Classificada</h6>
+                        <h6 class="text-white-50 fw-bold text-uppercase mb-3">🏆 Barraca Melhor Classificada</h6>
                         <?php if($estatisticas['top_tent']): ?>
                             <h4 class="text-white fw-bold"><?php echo htmlspecialchars($estatisticas['top_tent']['name']); ?></h4>
-                            <p class="text-muted mb-0">⭐ <?php echo number_format($estatisticas['top_tent']['media'],1); ?> (<?php echo $estatisticas['top_tent']['votos']; ?> votos)</p>
+                            <p class="text-white-50 mb-0">⭐ <?php echo number_format($estatisticas['top_tent']['media'],1); ?> (<?php echo $estatisticas['top_tent']['votos']; ?> votos)</p>
                         <?php else: ?><p class="text-muted">Sem dados suficientes.</p><?php endif; ?>
                     </div>
                 </div>
