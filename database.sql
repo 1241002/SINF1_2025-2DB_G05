@@ -110,9 +110,9 @@ CREATE TABLE Rating (
 INSERT INTO Role (id, name) VALUES (1, 'Admin'), (2, 'Student');
 
 INSERT INTO User (role_id, name, email, password_hash) VALUES
-(1, 'Administrador Principal', 'admin@queima.pt', 'hash_falsa_123'),
-(2, 'João Silva', 'joao.silva@estudante.pt', 'hash_falsa_456'),
-(2, 'Maria Santos', 'maria.santos@estudante.pt', 'hash_falsa_789');
+(1, 'Administrador Principal', 'admin@queima.pt', '$2y$10$llZObev6J1CFV5nlJn.79epXK8bekM2Zxz7ic6xEu6q.sk9DaB6bq'),
+(2, 'João Silva', 'joao.silva@estudante.pt', '$2y$10$1sbVl2o.bgsnN.ggvfJzTuMfDq6CfLbPwNbgk8JJWmxfPD3ltCNua'),
+(2, 'Maria Santos', 'maria.santos@estudante.pt', '$2y$10$mHMNkyRm2W4dpl5VOqkLJun/F0a4aC4cUWpf659PG4X3uV/oRgtSK');
 
 INSERT INTO Faculty (id, name, acronym, description, colour) VALUES
 (1, 'Faculdade de Engenharia', 'FEUP', 'A maior faculdade do Porto.', 'Tijolo'),

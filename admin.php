@@ -15,6 +15,8 @@ $sucesso = "";
 $erro = "";
 $aba_ativa = $_POST['tab'] ?? $_GET['tab'] ?? 'dashboard';
 
+$extensoes_validas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
 // ==========================================
 // EXPORTAR ARTISTAS PARA CSV
 // ==========================================
@@ -91,13 +93,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_artist'])) {
         if (isset($_FILES['imagem_artista']) && $_FILES['imagem_artista']['error'] == UPLOAD_ERR_OK) {
             $ficheiro_tmp = $_FILES['imagem_artista']['tmp_name'];
             $extensao = strtolower(pathinfo($_FILES['imagem_artista']['name'], PATHINFO_EXTENSION));
-            $nome_unico = uniqid('artist_') . '.' . $extensao;
-            $caminho_destino = 'uploads/' . $nome_unico;
-            if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
-                $imagem_artista = $nome_unico;
+            if (!in_array($extensao, $extensoes_validas)) {
+                $erro = "Formato de imagem inválido. Usa: jpg, jpeg, png, gif ou webp.";
+            } else {
+                $nome_unico = uniqid('artist_') . '.' . $extensao;
+                $caminho_destino = 'uploads/' . $nome_unico;
+                if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
+                    $imagem_artista = $nome_unico;
+                }
             }
         }
-        if (addArtist($pdo, trim($_POST['nome']), trim($_POST['genero']), trim($_POST['pais']), trim($_POST['biografia']), $imagem_artista)) {
+        if (empty($erro) && addArtist($pdo, trim($_POST['nome']), trim($_POST['genero']), trim($_POST['pais']), trim($_POST['biografia']), $imagem_artista)) {
             $sucesso = "Artista adicionado!";
         }
     }
@@ -110,18 +116,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_artist'])) {
     } else {
         $artista_atual = getArtistById($pdo, $_POST['artist_id']);
         $imagem_artista = $artista_atual['image'];
-        
+
         if (isset($_FILES['imagem_artista']) && $_FILES['imagem_artista']['error'] == UPLOAD_ERR_OK) {
             $ficheiro_tmp = $_FILES['imagem_artista']['tmp_name'];
             $extensao = strtolower(pathinfo($_FILES['imagem_artista']['name'], PATHINFO_EXTENSION));
-            $nome_unico = uniqid('artist_') . '.' . $extensao;
-            $caminho_destino = 'uploads/' . $nome_unico;
-            if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
-                $imagem_artista = $nome_unico;
+            if (!in_array($extensao, $extensoes_validas)) {
+                $erro = "Formato de imagem inválido. Usa: jpg, jpeg, png, gif ou webp.";
+            } else {
+                $nome_unico = uniqid('artist_') . '.' . $extensao;
+                $caminho_destino = 'uploads/' . $nome_unico;
+                if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
+                    $imagem_artista = $nome_unico;
+                }
             }
         }
-        
-        if (updateArtist($pdo, $_POST['artist_id'], trim($_POST['nome']), trim($_POST['genero']), trim($_POST['pais']), trim($_POST['biografia']), $imagem_artista)) {
+
+        if (empty($erro) && updateArtist($pdo, $_POST['artist_id'], trim($_POST['nome']), trim($_POST['genero']), trim($_POST['pais']), trim($_POST['biografia']), $imagem_artista)) {
             $sucesso = "Artista atualizado com sucesso!";
         } else {
             $erro = "Erro ao atualizar artista.";
@@ -147,17 +157,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_event'])) {
         if (isset($_FILES['imagem_evento']) && $_FILES['imagem_evento']['error'] == UPLOAD_ERR_OK) {
             $ficheiro_tmp = $_FILES['imagem_evento']['tmp_name'];
             $extensao = strtolower(pathinfo($_FILES['imagem_evento']['name'], PATHINFO_EXTENSION));
-            $nome_unico = uniqid('event_') . '.' . $extensao;
-            $caminho_destino = 'uploads/' . $nome_unico;
-            if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
-                $imagem_evento = $nome_unico;
+            if (!in_array($extensao, $extensoes_validas)) {
+                $erro = "Formato de imagem inválido. Usa: jpg, jpeg, png, gif ou webp.";
+            } else {
+                $nome_unico = uniqid('event_') . '.' . $extensao;
+                $caminho_destino = 'uploads/' . $nome_unico;
+                if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
+                    $imagem_evento = $nome_unico;
+                }
             }
         }
 
         $tent_id = !empty($_POST['tent_id']) ? $_POST['tent_id'] : NULL;
-        $artistas_selecionados = isset($_POST['artistas']) ? $_POST['artistas'] : []; 
+        $artistas_selecionados = isset($_POST['artistas']) ? $_POST['artistas'] : [];
 
-        if (addEvent($pdo, $tent_id, trim($_POST['nome']), trim($_POST['descricao']), $_POST['data_hora'], trim($_POST['localizacao']), $_POST['tipo'], $artistas_selecionados, $imagem_evento)) {
+        if (empty($erro) && addEvent($pdo, $tent_id, trim($_POST['nome']), trim($_POST['descricao']), $_POST['data_hora'], trim($_POST['localizacao']), $_POST['tipo'], $artistas_selecionados, $imagem_evento)) {
             $sucesso = "Evento adicionado com sucesso!";
         } else {
             $erro = "Erro ao adicionar evento.";
@@ -172,21 +186,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_event'])) {
     } else {
         $evento_atual = getEventByIdFull($pdo, $_POST['event_id']);
         $imagem_evento = $evento_atual['image'];
-        
+
         if (isset($_FILES['imagem_evento']) && $_FILES['imagem_evento']['error'] == UPLOAD_ERR_OK) {
             $ficheiro_tmp = $_FILES['imagem_evento']['tmp_name'];
             $extensao = strtolower(pathinfo($_FILES['imagem_evento']['name'], PATHINFO_EXTENSION));
-            $nome_unico = uniqid('event_') . '.' . $extensao;
-            $caminho_destino = 'uploads/' . $nome_unico;
-            if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
-                $imagem_evento = $nome_unico;
+            if (!in_array($extensao, $extensoes_validas)) {
+                $erro = "Formato de imagem inválido. Usa: jpg, jpeg, png, gif ou webp.";
+            } else {
+                $nome_unico = uniqid('event_') . '.' . $extensao;
+                $caminho_destino = 'uploads/' . $nome_unico;
+                if (move_uploaded_file($ficheiro_tmp, $caminho_destino)) {
+                    $imagem_evento = $nome_unico;
+                }
             }
         }
-        
+
         $tent_id = !empty($_POST['tent_id']) ? $_POST['tent_id'] : NULL;
         $artistas_selecionados = isset($_POST['artistas']) ? $_POST['artistas'] : [];
-        
-        if (updateEvent($pdo, $_POST['event_id'], $tent_id, trim($_POST['nome']), trim($_POST['descricao']), $_POST['data_hora'], trim($_POST['localizacao']), $_POST['tipo'], $artistas_selecionados, $imagem_evento)) {
+
+        if (empty($erro) && updateEvent($pdo, $_POST['event_id'], $tent_id, trim($_POST['nome']), trim($_POST['descricao']), $_POST['data_hora'], trim($_POST['localizacao']), $_POST['tipo'], $artistas_selecionados, $imagem_evento)) {
             $sucesso = "Evento atualizado com sucesso!";
         } else {
             $erro = "Erro ao atualizar evento.";

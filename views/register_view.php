@@ -67,7 +67,7 @@
             </div>
             
             <p class="text-center text-secondary mt-5 small">
-                O teu passaporte para a melhor semana do ano.[cite: 1]
+                O teu passaporte para a melhor semana do ano.
             </p>
         </div>
     </div>

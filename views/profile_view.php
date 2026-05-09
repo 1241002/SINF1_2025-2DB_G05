@@ -123,7 +123,7 @@
 
             <div class="text-center mt-4">
                 <p class="text-secondary small">
-                    Estás registado como: <strong><?php echo $is_admin ? 'Administrador' : 'Estudante'; ?></strong>[cite: 1]
+                    Estás registado como: <strong><?php echo $is_admin ? 'Administrador' : 'Estudante'; ?></strong>
                 </p>
             </div>
             

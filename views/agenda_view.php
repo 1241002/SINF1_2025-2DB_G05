@@ -79,7 +79,7 @@
         <div class="card event-card text-center py-5 shadow-lg">
             <div class="card-body">
                 <h3 class="fw-bold mb-3" style="font-family: 'Syne', sans-serif;">AINDA NÃO TENS PLANOS?</h3>
-                <p class="text-secondary">Explora o Programa Oficial e cria o teu roteiro personalizado para não perderes nada[cite: 1].</p>
+                <p class="text-secondary">Explora o Programa Oficial e cria o teu roteiro personalizado para não perderes nada.</p>
                 <a href="index.php" class="btn btn-primary mt-3 px-5 py-3 fw-bold">IR PARA O PROGRAMA</a>
             </div>
         </div>
@@ -121,7 +121,7 @@
                                 <input type="hidden" name="remove_agenda" value="1">
                                 <input type="hidden" name="evento_id" value="<?php echo $evento['id']; ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-danger w-100 py-2 fw-bold" style="border-radius: 10px;">
-                                    ❌ REMOVER DA AGENDA[cite: 1]
+                                    ❌ REMOVER DA AGENDA
                                 </button>
                             </form>
                         </div>
