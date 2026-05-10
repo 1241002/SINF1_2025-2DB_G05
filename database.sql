@@ -8,13 +8,13 @@ USE SINF1_Queima_BD;
 -- 2. CRIAÇÃO DAS TABELAS (ESTRUTURA)
 -- ==========================================
 
--- Tabela de Papéis (Admin / Student) [cite: 46-47, 105]
+-- Tabela de Papéis (Admin / Student)
 CREATE TABLE Role (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
--- Tabela de Utilizadores [cite: 18, 104]
+-- Tabela de Utilizadores
 CREATE TABLE User (
     id INT AUTO_INCREMENT PRIMARY KEY,
     role_id INT NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE User (
     FOREIGN KEY (role_id) REFERENCES Role(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
--- Tabela de Faculdades [cite: 70, 106]
+-- Tabela de Faculdades
 CREATE TABLE Faculty (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE Faculty (
     colour VARCHAR(50)
 ) ENGINE=InnoDB;
 
--- Tabela de Barracas (Tents) [cite: 84, 107]
+-- Tabela de Barracas (Tents)
 CREATE TABLE Tent (
     id INT AUTO_INCREMENT PRIMARY KEY,
     faculty_id INT NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE Tent (
     FOREIGN KEY (faculty_id) REFERENCES Faculty(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
--- Tabela de Eventos [cite: 54, 108]
+-- Tabela de Eventos
 CREATE TABLE Event (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tent_id INT DEFAULT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE Event (
     FOREIGN KEY (tent_id) REFERENCES Tent(id) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
--- Tabela de Artistas [cite: 77, 109]
+-- Tabela de Artistas
 CREATE TABLE Artist (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE Artist (
     image VARCHAR(255) DEFAULT 'default.jpg'
 ) ENGINE=InnoDB;
 
--- Tabela Associativa: Artistas nos Eventos [cite: 22, 68, 83]
+-- Tabela Associativa: Artistas nos Eventos
 CREATE TABLE Event_Artist (
     event_id INT NOT NULL,
     artist_id INT NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE Event_Artist (
     FOREIGN KEY (artist_id) REFERENCES Artist(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
--- Tabela da Agenda Pessoal [cite: 50, 91, 111]
+-- Tabela da Agenda Pessoal
 CREATE TABLE PersonalAgenda (
     user_id INT NOT NULL,
     event_id INT NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE PersonalAgenda (
     FOREIGN KEY (event_id) REFERENCES Event(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
--- Tabela de Avaliações (Ratings) [cite: 28, 51, 96, 110]
+-- Tabela de Avaliações (Ratings)
 CREATE TABLE Rating (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE Rating (
 ) ENGINE=InnoDB;
 
 -- ==========================================
--- 3. INSERÇÃO DE DADOS DE TESTE (TEST DATA) [cite: 116, 140]
+-- 3. INSERÇÃO DE DADOS DE TESTE (TEST DATA)
 -- ==========================================
 
 INSERT INTO Role (id, name) VALUES (1, 'Admin'), (2, 'Student');
