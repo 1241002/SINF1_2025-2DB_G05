@@ -131,7 +131,7 @@
                             </div>
                             <div class="col-md-7">
                                 <h5 class="text-white fw-bold mb-3" style="font-family: 'Syne', sans-serif;">SOBRE O EVENTO</h5>
-                                <p class="text-secondary lh-lg"><?php echo nl2br(htmlspecialchars($data['description'] ?? 'Sem descrição disponível.')); ?></p>
+                                <p class="text-secondary lh-lg"><?php echo !empty($data['description']) ? nl2br(htmlspecialchars($data['description'])) : 'Sem descrição disponível.'; ?></p>
                             </div>
                         </div>
 

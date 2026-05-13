@@ -43,6 +43,9 @@
                     <a href="tents.php" class="nav-link fw-bold text-uppercase small px-3">⛺ Barracas</a>
                 </li>
                 <li class="nav-item">
+                    <a href="artists.php" class="nav-link fw-bold text-uppercase small px-3">🎤 Artistas</a>
+                </li>
+                <li class="nav-item">
                     <a href="agenda.php" class="nav-link fw-bold text-uppercase small px-3 active" style="color: var(--neon-blue);">📅 Agenda</a>
                 </li>
 

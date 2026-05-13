@@ -51,7 +51,7 @@ function getEventComments($pdo, $evento_id) {
 // ==========================================
 // OBTER DADOS PARA A VIEW COM PESQUISA E FILTROS
 // ==========================================
-function getEventsWithRatings($pdo, $ordenacao = 'data', $search = '', $tipo = '', $faculty_id = '') {
+function getEventsWithRatings($pdo, $ordenacao = 'data', $search = '', $tipo = '', $faculty_id = '', $data_filtro = '') {
     $orderBy = "Event.date_time ASC"; 
     if ($ordenacao == 'rating') {
         $orderBy = "media_rating DESC, Event.date_time ASC";
@@ -77,6 +77,11 @@ function getEventsWithRatings($pdo, $ordenacao = 'data', $search = '', $tipo = '
     if (!empty($faculty_id)) {
         $where[] = "Tent.faculty_id = ?";
         $params[] = $faculty_id;
+    }
+
+    if (!empty($data_filtro)) {
+        $where[] = "DATE(Event.date_time) = ?";
+        $params[] = $data_filtro;
     }
 
     $whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';

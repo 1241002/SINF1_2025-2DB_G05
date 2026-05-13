@@ -39,6 +39,7 @@
                 </li>
                 <li class="nav-item"><a href="index.php" class="nav-link fw-bold text-uppercase small px-3 active" style="color:var(--neon-green)">📋 Programa</a></li>
                 <li class="nav-item"><a href="tents.php" class="nav-link fw-bold text-uppercase small px-3">⛺ Barracas</a></li>
+                <li class="nav-item"><a href="artists.php" class="nav-link fw-bold text-uppercase small px-3">🎤 Artistas</a></li>
                 <li class="nav-item"><a href="agenda.php" class="nav-link fw-bold text-uppercase small px-3">📅 Agenda</a></li>
                 <?php if($is_admin): ?>
                     <li class="nav-item ms-lg-2"><a href="admin.php" class="btn btn-sm btn-outline-warning fw-bold px-3">ADMIN</a></li>
@@ -85,6 +86,9 @@
                             <option value="<?php echo $fac['id']; ?>" <?php if($faculty_filtro==$fac['id']) echo 'selected'; ?>><?php echo htmlspecialchars($fac['acronym']); ?></option>
                         <?php endforeach; ?>
                     </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="data" class="filter-select w-100" value="<?php echo htmlspecialchars($data_filtro); ?>" onchange="this.form.submit()">
                 </div>
                 <div class="col-md-2">
                     <select name="sort" class="filter-select w-100" onchange="this.form.submit()">
@@ -158,6 +162,10 @@
                                     <span class="artist-tag">+<?php echo count($artistas_nomes)-3; ?></span>
                                 <?php endif; ?>
                             </div>
+                        <?php endif; ?>
+
+                        <?php if(!empty($evento['description'])): ?>
+                            <p class="small text-secondary mb-2" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;"><?php echo htmlspecialchars($evento['description']); ?></p>
                         <?php endif; ?>
 
                         <p class="small text-secondary mb-3">

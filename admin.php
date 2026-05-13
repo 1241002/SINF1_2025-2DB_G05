@@ -75,6 +75,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import_artists'])) {
     }
 }
 
+// IMPORTAR EVENTOS DE CSV
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import_events'])) {
+    if (isset($_FILES['csv_file_events']) && $_FILES['csv_file_events']['error'] == 0) {
+        $ficheiro = $_FILES['csv_file_events']['tmp_name'];
+        if (($handle = fopen($ficheiro, "r")) !== FALSE) {
+            fgetcsv($handle, 1000, ",");
+            $eventos_importados = 0;
+            while (($linha = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if (count($linha) >= 5) {
+                    $nome      = trim($linha[0]);
+                    $tipo      = trim($linha[1]);
+                    $data_hora = trim($linha[2]);
+                    $localizacao = trim($linha[3]);
+                    $descricao = trim($linha[4]);
+                    if (addEvent($pdo, null, $nome, $descricao, $data_hora, $localizacao, $tipo, [], 'default.jpg')) {
+                        $eventos_importados++;
+                    }
+                }
+            }
+            fclose($handle);
+            $sucesso = "$eventos_importados eventos importados com sucesso!";
+            $aba_ativa = 'eventos';
+        } else {
+            $erro = "Não foi possível abrir o ficheiro CSV.";
+        }
+    } else {
+        $erro = "Erro no upload do ficheiro.";
+    }
+}
+
 // ==========================================
 // ARTISTAS - DELETE
 // ==========================================
@@ -152,6 +182,8 @@ if (isset($_GET['delete_event'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_event'])) {
     if (empty($_POST['nome']) || empty($_POST['tipo']) || empty($_POST['data_hora']) || empty($_POST['localizacao'])) {
         $erro = "Preenche os campos obrigatórios do evento.";
+    } elseif (strtotime($_POST['data_hora']) <= time()) {
+        $erro = "A data do evento tem de ser futura.";
     } else {
         $imagem_evento = 'default.jpg';
         if (isset($_FILES['imagem_evento']) && $_FILES['imagem_evento']['error'] == UPLOAD_ERR_OK) {
@@ -183,6 +215,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_event'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_event'])) {
     if (empty($_POST['nome']) || empty($_POST['tipo']) || empty($_POST['data_hora']) || empty($_POST['localizacao']) || empty($_POST['event_id'])) {
         $erro = "Dados incompletos para edição de evento.";
+    } elseif (strtotime($_POST['data_hora']) <= time()) {
+        $erro = "A data do evento tem de ser futura.";
     } else {
         $evento_atual = getEventByIdFull($pdo, $_POST['event_id']);
         $imagem_evento = $evento_atual['image'];

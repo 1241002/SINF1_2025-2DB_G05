@@ -31,6 +31,7 @@
                 </li>
                 <li class="nav-item"><a href="index.php" class="nav-link fw-bold text-uppercase small px-3">📋 Programa</a></li>
                 <li class="nav-item"><a href="tents.php" class="nav-link fw-bold text-uppercase small px-3 active" style="color: var(--neon-green);">⛺ Barracas</a></li>
+                <li class="nav-item"><a href="artists.php" class="nav-link fw-bold text-uppercase small px-3">🎤 Artistas</a></li>
                 <li class="nav-item"><a href="agenda.php" class="nav-link fw-bold text-uppercase small px-3">📅 Agenda</a></li>
                 <?php if($is_admin): ?><li class="nav-item ms-lg-2"><a href="admin.php" class="btn btn-sm btn-outline-warning fw-bold px-3">ADMIN</a></li><?php endif; ?>
                 <li class="nav-item ms-lg-3"><a href="logout.php" class="btn btn-bilhetes">SAIR</a></li>

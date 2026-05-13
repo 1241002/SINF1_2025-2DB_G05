@@ -158,7 +158,7 @@
                                         <option value="Cultural activity">Atividade Cultural</option>
                                     </select>
                                 </div>
-                                <div class="mb-3"><input type="datetime-local" name="data_hora" class="form-control" required></div>
+                                <div class="mb-3"><input type="datetime-local" name="data_hora" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>"></div>
                                 <div class="mb-3">
                                     <select name="localizacao" class="form-select bg-dark text-white border-secondary" required>
                                         <option value="">Recinto/Local...</option>
@@ -200,7 +200,15 @@
                     <div class="card event-card p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                             <h5 class="text-white fw-bold mb-0">GESTÃO DE EVENTOS</h5>
-                            <a href="admin.php?export_events=1" class="btn btn-sm btn-outline-success fw-bold">EXPORTAR CSV</a>
+                            <div class="d-flex gap-2 flex-wrap align-items-center">
+                                <form method="POST" enctype="multipart/form-data" class="d-flex align-items-center">
+                                    <input type="hidden" name="import_events" value="1">
+                                    <input type="hidden" name="tab" value="eventos">
+                                    <input type="file" name="csv_file_events" class="form-control form-control-sm me-2 bg-dark text-white border-secondary" accept=".csv" required style="width: 150px;">
+                                    <button type="submit" class="btn btn-sm btn-outline-info fw-bold">IMPORTAR</button>
+                                </form>
+                                <a href="admin.php?export_events=1" class="btn btn-sm btn-outline-success fw-bold">EXPORTAR CSV</a>
+                            </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-sm table-dark table-hover table-borderless align-middle">
@@ -386,7 +394,7 @@ Atenção: Barracas associadas podem ser afetadas.');">Apagar</a>
                             <option value="Cultural activity" <?php echo $evento['type'] === 'Cultural activity' ? 'selected' : ''; ?>>Atividade Cultural</option>
                         </select>
                     </div>
-                    <div class="mb-3"><label class="form-label small text-muted">Data/Hora</label><input type="datetime-local" name="data_hora" class="form-control" value="<?php echo date('Y-m-d\TH:i', strtotime($evento['date_time'])); ?>" required></div>
+                    <div class="mb-3"><label class="form-label small text-muted">Data/Hora</label><input type="datetime-local" name="data_hora" class="form-control" value="<?php echo date('Y-m-d\TH:i', strtotime($evento['date_time'])); ?>" required min="<?php echo date('Y-m-d\TH:i'); ?>"></div>
                     <div class="mb-3"><label class="form-label small text-muted">Recinto/Local</label>
                         <select name="localizacao" class="form-select bg-dark text-white border-secondary" required>
                             <option value="">Recinto/Local...</option>

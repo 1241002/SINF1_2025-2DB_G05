@@ -35,9 +35,10 @@ $ordenacao = isset($_GET['sort']) ? $_GET['sort'] : 'data';
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $tipo_filtro = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 $faculty_filtro = isset($_GET['faculty']) ? $_GET['faculty'] : '';
+$data_filtro = $_GET['data'] ?? '';
 
 // BUSCAR DADOS
-$eventos = getEventsWithRatings($pdo, $ordenacao, $search, $tipo_filtro, $faculty_filtro);
+$eventos = getEventsWithRatings($pdo, $ordenacao, $search, $tipo_filtro, $faculty_filtro, $data_filtro);
 $tipos_evento = getEventTypes($pdo);
 $faculdades = getFaculties($pdo);
 $minha_agenda = getUserAgendaIds($pdo, $user_id);
