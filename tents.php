@@ -17,8 +17,11 @@ $is_admin = ($_SESSION['user_role'] == 1);
 
 // AVALIAÇÃO COM COMENTÁRIO
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rate_tent'])) {
-    $comentario = !empty($_POST['rating_comment']) ? trim($_POST['rating_comment']) : null;
-    rateTent($pdo, $user_id, $_POST['tent_id'], (int)$_POST['rating_value'], $comentario);
+    $nota = (int)$_POST['rating_value'];
+    if ($nota >= 1 && $nota <= 5) {
+        $comentario = !empty($_POST['rating_comment']) ? trim($_POST['rating_comment']) : null;
+        rateTent($pdo, $user_id, $_POST['tent_id'], $nota, $comentario);
+    }
     header("Location: tents.php?" . $_SERVER['QUERY_STRING']);
     exit();
 }

@@ -2,8 +2,13 @@
 // models/AdminModel.php
 
 // === ARTISTAS ===
-function getArtists($pdo) {
-    return $pdo->query("SELECT * FROM Artist ORDER BY name ASC")->fetchAll(PDO::FETCH_ASSOC);
+function getArtists($pdo, $search = '') {
+    if (empty($search)) {
+        return $pdo->query("SELECT * FROM Artist ORDER BY name ASC")->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $stmt = $pdo->prepare("SELECT * FROM Artist WHERE name LIKE ? OR musical_genre LIKE ? OR country LIKE ? ORDER BY name ASC");
+    $stmt->execute(["%$search%", "%$search%", "%$search%"]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function getArtistById($pdo, $id) {
@@ -71,21 +76,22 @@ function addEvent($pdo, $tent_id, $nome, $descricao, $data_hora, $localizacao, $
 function updateEvent($pdo, $id, $tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo, $artistas_selecionados = [], $imagem = null) {
     if ($imagem) {
         $stmt = $pdo->prepare("UPDATE Event SET tent_id=?, name=?, description=?, date_time=?, location=?, type=?, image=? WHERE id=?");
-        $stmt->execute([$tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo, $imagem, $id]);
+        $sucesso = $stmt->execute([$tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo, $imagem, $id]);
     } else {
         $stmt = $pdo->prepare("UPDATE Event SET tent_id=?, name=?, description=?, date_time=?, location=?, type=? WHERE id=?");
-        $stmt->execute([$tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo, $id]);
+        $sucesso = $stmt->execute([$tent_id, $nome, $descricao, $data_hora, $localizacao, $tipo, $id]);
     }
 
-    // Atualizar artistas
-    $pdo->prepare("DELETE FROM Event_Artist WHERE event_id = ?")->execute([$id]);
-    if (!empty($artistas_selecionados)) {
-        $stmt_artist = $pdo->prepare("INSERT INTO Event_Artist (event_id, artist_id) VALUES (?, ?)");
-        foreach ($artistas_selecionados as $artist_id) {
-            $stmt_artist->execute([$id, $artist_id]);
+    if ($sucesso) {
+        $pdo->prepare("DELETE FROM Event_Artist WHERE event_id = ?")->execute([$id]);
+        if (!empty($artistas_selecionados)) {
+            $stmt_artist = $pdo->prepare("INSERT INTO Event_Artist (event_id, artist_id) VALUES (?, ?)");
+            foreach ($artistas_selecionados as $artist_id) {
+                $stmt_artist->execute([$id, $artist_id]);
+            }
         }
     }
-    return true;
+    return $sucesso;
 }
 
 // === BARRACAS ===

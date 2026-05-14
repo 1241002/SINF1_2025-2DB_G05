@@ -75,7 +75,7 @@ function getEventsWithRatings($pdo, $ordenacao = 'data', $search = '', $tipo = '
     }
 
     if (!empty($faculty_id)) {
-        $where[] = "Tent.faculty_id = ?";
+        $where[] = "(Tent.faculty_id = ? OR Event.tent_id IS NULL)";
         $params[] = $faculty_id;
     }
 

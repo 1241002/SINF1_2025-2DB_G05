@@ -4,7 +4,7 @@
 session_start();
 require_once 'db.php';
 require_once 'models/IndexModel.php';
-require_once 'models/AdminModel.php'; // <-- A LINHA QUE FALTAVA!
+require_once 'models/AdminModel.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -24,8 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['toggle_agenda'])) {
 
 // LÓGICA DE AVALIAÇÃO COM COMENTÁRIO
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rate_event'])) {
-    $comentario = !empty($_POST['rating_comment']) ? trim($_POST['rating_comment']) : null;
-    rateEvent($pdo, $user_id, $_POST['evento_id'], (int)$_POST['rating_value'], $comentario);
+    $nota = (int)$_POST['rating_value'];
+    if ($nota >= 1 && $nota <= 5) {
+        $comentario = !empty($_POST['rating_comment']) ? trim($_POST['rating_comment']) : null;
+        rateEvent($pdo, $user_id, $_POST['evento_id'], $nota, $comentario);
+    }
     header("Location: index.php?" . $_SERVER['QUERY_STRING']);
     exit();
 }
